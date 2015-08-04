@@ -482,6 +482,21 @@ a:hover, .nav-top > li.active .has-sub-nav {
 }
 
 /* header */
+.logo {
+  display: block;
+  float: left;
+  width: 120px;
+  height: 40px;
+  background: red;
+  margin-left: 15px;
+}
+@media screen and (max-width: 31em) {
+  .logo {
+    width: 90px;
+    height: 30px;
+  }
+}
+
 .nav-top {
   list-style: none;
   margin: 0;
@@ -558,28 +573,25 @@ a:hover, .nav-top > li.active .has-sub-nav {
 }
 
 .header-overlay {
-  display: none;
+  background: grey;
 }
 @media screen and (max-width: 31em) {
   .header-overlay {
     display: block;
     overflow: hidden;
-    background: grey;
   }
 }
 
 .mobile-menu {
   display: none;
   float: right;
-  margin: 10px 15px 0 0;
+  margin: 10px 8px 0 0;
   width: 30px;
   height: 28px;
-  background: #454545;
   cursor: pointer;
   -webkit-transition: 200ms all;
   -moz-transition: 200ms all;
   transition: 200ms all;
-  margin-top: 3px;
 }
 @media screen and (max-width: 31em) {
   .mobile-menu {
@@ -587,7 +599,7 @@ a:hover, .nav-top > li.active .has-sub-nav {
   }
 }
 .mobile-menu.active .bar {
-  background: #e8e8e8;
+  background: #919092;
   position: relative;
 }
 .mobile-menu.active .bar:nth-child(1) {
@@ -619,7 +631,7 @@ a:hover, .nav-top > li.active .has-sub-nav {
   display: block;
   width: 20px;
   height: 3px;
-  background: #fff;
+  background: #414042;
   margin: 0 auto 4px;
   -webkit-transition: 100ms all;
   -moz-transition: 100ms all;

@@ -34,6 +34,12 @@ a:hover { text-decoration: none; color: #919092; }
 
 /* header */
 
+.logo { 
+	display: block; float: left; width: 120px; height: 40px; background: red; margin-left: 15px;
+
+	@include media($sm) { width: 90px; height: 30px; }
+}
+
 .nav-top { 
 	list-style: none; margin: 0; padding: 10px 15px 0 0; overflow: visible; float: right; 
 	
@@ -72,19 +78,19 @@ a:hover { text-decoration: none; color: #919092; }
 }
 
 .header-overlay {
-	display: none;
+	background: grey;
 
-	@include media($sm) { display: block; overflow: hidden; background: grey; }
+	@include media($sm) { display: block; overflow: hidden; }
 }
 
 .mobile-menu {
-	display: none; float: right; margin: 10px 15px 0 0; width: 30px; height: 28px; background: #454545; cursor: pointer; @include transition(200ms all); margin-top: 3px;
+	display: none; float: right; margin: 10px 8px 0 0; width: 30px; height: 28px; cursor: pointer; @include transition(200ms all); 
 
 	@include media($sm) { display: block; }
 
 	&.active {
 		.bar { 
-			background: #e8e8e8; position: relative; 
+			background: #919092; position: relative; 
 
 			&:nth-child(1) { top: 7px; @include transform(rotate(45deg)); }
 			&:nth-child(2) { top: -1px; opacity: 0; @include transform(rotate(45deg)); }
@@ -92,5 +98,5 @@ a:hover { text-decoration: none; color: #919092; }
 		}
 	}
 
-	.bar { display: block; width: 20px; height: 3px; background: #fff; margin: 0 auto 4px; @include transition(100ms all); border-radius: 2px; }
+	.bar { display: block; width: 20px; height: 3px; background: #414042; margin: 0 auto 4px; @include transition(100ms all); border-radius: 2px; }
 }
