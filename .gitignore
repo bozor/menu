@@ -1,0 +1,19 @@
+*.scssc
+.DS_Store
+
+# We don't want to check in packages
+.node_modules
+node_modules/*
+
+# or sass caches
+.sass_cache
+sass_cache/*
+.sass-cache/
+
+# or bower packages
+.bower_components
+bower_components/*
+
+# or any temp files
+.tmp
+tmp/*

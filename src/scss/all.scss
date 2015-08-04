@@ -1,0 +1,96 @@
+@import "third-party/normalize";
+
+@import "bourbon";
+@import "neat";
+
+/* tweaking the grid */
+$grid-columns: 24;
+$gutter: modular-scale(1, 2em, $golden);
+$max-width: em(1160);
+$visual-grid: false;
+
+/* breakpoints */
+$sm: new-breakpoint(max-width 31em);
+$md: new-breakpoint(min-width 31em);
+$lg: new-breakpoint(min-width 65em);
+$xl: new-breakpoint(min-width 80em);
+
+html { background: #fff; font-family: 'Source Sans Pro', sans serif; box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+
+a { color: #414042; }
+a:hover { text-decoration: none; color: #919092; }
+
+.layout-top { 
+	background: rgba(0,0,0,0.2); padding-top: 30px; 
+
+	@include media($sm) { background: rgba(100,0,0,0.2); }
+	@include media($md) { background: rgba(0,100,0,0.2); }
+	@include media($lg) { background: rgba(0,0,100,0.3); }
+}
+
+.layout-content { @include outer-container; background: #fff; }
+.main { @include outer-container; padding: 0 15px; }
+
+/* header */
+
+.nav-top { 
+	list-style: none; margin: 0; padding: 10px 15px 0 0; overflow: visible; float: right; 
+	
+	@include media($sm) { display: none; position: absolute; top: 70px; float: none; padding: 0 15px 15px; width: 100%; }
+
+	> li { 
+		position: relative; float: left; margin-left: 15px; 
+
+		@include media($sm) { float: none; margin-left: 0; background: rgba(100,0,0,0.3); }
+
+		&.active {
+			.has-sub-nav { @extend a:hover; }
+			.sub-nav { 
+				display: block;
+				
+				@include media($sm) { display: block; max-height: 999px; @include transition(200ms all); }
+			}
+		}
+
+		.has-sub-nav {
+			@include media($sm) { display: block; }
+		}
+	}
+
+	&.active { display: block; }
+}
+
+.sub-nav {  
+	display: none; position: absolute; right: 0; top: 30px; background: #f2f2f2; min-width: 100px; padding: 15px;
+
+	@include media($sm) {
+		position: relative; top: auto; max-height: 0; @include transition(200ms all);
+	}
+
+	ul { list-style: none; margin: 0; padding: 0; }
+}
+
+.header-overlay {
+	display: none;
+
+	@include media($sm) { display: block; overflow: hidden; background: grey; }
+}
+
+.mobile-menu {
+	display: none; float: right; margin: 10px 15px 0 0; width: 30px; height: 28px; background: #454545; cursor: pointer; @include transition(200ms all); margin-top: 3px;
+
+	@include media($sm) { display: block; }
+
+	&.active {
+		.bar { 
+			background: #e8e8e8; position: relative; 
+
+			&:nth-child(1) { top: 7px; @include transform(rotate(45deg)); }
+			&:nth-child(2) { top: -1px; opacity: 0; @include transform(rotate(45deg)); }
+			&:nth-child(3) { bottom: 7px; @include transform(rotate(-45deg)); }
+		}
+	}
+
+	.bar { display: block; width: 20px; height: 3px; background: #fff; margin: 0 auto 4px; @include transition(100ms all); border-radius: 2px; }
+}
