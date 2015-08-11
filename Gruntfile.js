@@ -53,15 +53,27 @@ module.exports = function(grunt) {
         assemble: {
 			options: {
 				flatten: true,
-				data: 'src/json/temp.json'
+				layout: 'src/layout/default.hbs',
+				partials: 'src/partials/*.hbs' 
 			},
-			temp_page: {
-				options: { layout: 'src/layout/default.hbs' },
+			all: {
+				options: { 
+					data: 'src/json/*.json'
+				},
+				files: [{
+					src: 'src/pages/*.hbs',
+					dest: './public_html'
+				}]
+			}
+			/*temp_page: {
+				options: { 
+					data: 'src/json/temp.json'
+				},
 				files: [{
 					src: 'src/pages/temp.hbs',
 					dest: './public_html'
 				}]
-			}
+			}*/
         },
 
         watch: {
@@ -87,7 +99,7 @@ module.exports = function(grunt) {
                 tasks: 'sass:dev'
             },
             assemble : {
-                files : ['src/layout/*.hbs','src/pages/*.hbs', 'src/json/temp.json'],
+                files : ['src/layout/*.hbs','src/pages/*.hbs','src/partials/*.hbs','src/json/temp.json'],
                 tasks: ['assemble']
             }
         },
@@ -107,6 +119,7 @@ module.exports = function(grunt) {
         },
             
         clean: {
+        	html: 'public_html/*.html',
             stylesheets: 'public_html/css/*.css',
             js: 'public_html/js/*.js'
         }
