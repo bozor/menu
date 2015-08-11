@@ -50,6 +50,20 @@ module.exports = function(grunt) {
             }
         },
 
+        assemble: {
+			options: {
+				flatten: true,
+				data: 'src/json/temp.json'
+			},
+			temp_page: {
+				options: { layout: 'src/layout/default.hbs' },
+				files: [{
+					src: 'src/pages/temp.hbs',
+					dest: './public_html'
+				}]
+			}
+        },
+
         watch: {
             options: {
                 livereload: 35729
@@ -71,6 +85,10 @@ module.exports = function(grunt) {
             stylesheets: {
                 files: 'src/scss/**',
                 tasks: 'sass:dev'
+            },
+            assemble : {
+                files : ['src/layout/*.hbs','src/pages/*.hbs', 'src/json/temp.json'],
+                tasks: ['assemble']
             }
         },
                      
@@ -97,7 +115,7 @@ module.exports = function(grunt) {
     
     grunt.registerTask('stylesheets:dev', ['sass:dev']);
     grunt.registerTask('js:dev', ['concat:dev', 'bower_concat', 'uglify:js']);
-    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all']);
+    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble']);
 
     grunt.registerTask('publish', ['dev']);
     grunt.registerTask('default', ['dev', 'connect', 'watch']);

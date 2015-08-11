@@ -7,7 +7,8 @@
 $grid-columns: 24;
 $gutter: modular-scale(1, 2em, $golden);
 $max-width: em(1160);
-$visual-grid: false;
+$visual-grid: true;
+$visual-grid-color: #ddd;
 
 /* breakpoints */
 $sm: new-breakpoint(max-width 31em);
@@ -110,5 +111,5 @@ img { max-width: 100%; }
 
 	@include media($sm) { @include span-columns(24); }
 
-	h2 { margin-top: 0; }
+	h2 { margin-top: 0; font-size: 1.5rem; }
 }
