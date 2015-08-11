@@ -15,6 +15,14 @@ module.exports = function(grunt) {
             }
         },
         
+        uglify: {
+            js: {
+                files: { 
+                  'public_html/js/libs.js': ['public_html/js/libs.js']
+                }
+            }
+        },
+
         concat: {
             options: {
                 separator: ';'
@@ -82,14 +90,13 @@ module.exports = function(grunt) {
             
         clean: {
             stylesheets: 'public_html/css/*.css',
-            js: 'public_html/js/*.js',
-            images: 'public_html/images/*.{png,jpg,gif}'
+            js: 'public_html/js/*.js'
         }
 
     });
     
     grunt.registerTask('stylesheets:dev', ['sass:dev']);
-    grunt.registerTask('js:dev', ['concat:dev', 'bower_concat']);
+    grunt.registerTask('js:dev', ['concat:dev', 'bower_concat', 'uglify:js']);
     grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all']);
 
     grunt.registerTask('publish', ['dev']);
