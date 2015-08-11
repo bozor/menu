@@ -31,32 +31,38 @@ module.exports = function(grunt) {
             }
         },
         
+        imagemin: {
+            all: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/images/',
+                    src: ['**/*.{png,jpg,gif}'],
+                    dest: 'public_html/images/'
+                }]
+            }
+        },
+
         watch: {
+            options: {
+                livereload: 35729
+            },
             markup: {
-                files: ['public_html/**'],
-                options: {
-                    livereload: 35729
-                }
+                files: 'public_html/**'
             },
             grunt: {
-                files: ['Gruntfile.js'],
-                options: {
-                    livereload: 35729
-                }
+                files: 'Gruntfile.js'
+            },
+            images: {
+                files: 'src/images/**',
+                tasks: 'newer:imagemin'
             },
             js: {
                 files: 'src/js/**',
-                tasks: 'concat:dev',
-                options: {
-                    livereload: 35729
-                }
+                tasks: 'newer:concat:dev'
             },
             stylesheets: {
                 files: 'src/scss/**',
-                tasks: 'sass:dev',
-                options: {
-                    livereload: 35729
-                }
+                tasks: 'sass:dev'
             }
         },
                      
@@ -76,14 +82,15 @@ module.exports = function(grunt) {
             
         clean: {
             stylesheets: 'public_html/css/*.css',
-            js: 'public_html/js/*.js'
+            js: 'public_html/js/*.js',
+            images: 'public_html/images/*.{png,jpg,gif}'
         }
 
     });
     
-    grunt.registerTask('stylesheets:dev', ['clean:stylesheets', 'sass:dev']);
-    grunt.registerTask('js:dev', ['clean:js', 'concat:dev', 'bower_concat']);
-    grunt.registerTask('dev', ['stylesheets:dev', 'js:dev']);
+    grunt.registerTask('stylesheets:dev', ['sass:dev']);
+    grunt.registerTask('js:dev', ['concat:dev', 'bower_concat']);
+    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all']);
 
     grunt.registerTask('publish', ['dev']);
     grunt.registerTask('default', ['dev', 'connect', 'watch']);
