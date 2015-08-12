@@ -17,3 +17,7 @@ bower_components/*
 # or any temp files
 .tmp
 tmp/*
+
+# or anything in the build folder
+.public_html
+public_html/*
