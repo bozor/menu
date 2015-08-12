@@ -21,3 +21,7 @@ tmp/*
 # or anything in the build folder
 .public_html
 public_html/*
+
+# or any compiled css/map files
+*.css
+*.map
