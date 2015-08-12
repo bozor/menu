@@ -1,4 +1,6 @@
-var Events = {
+var App = App || {};
+
+App.Events = {
 	topMenu: function(){
 		$('.mobile-menu').click(function(e){
 			$(this).toggleClass('active');
@@ -19,80 +21,48 @@ var Events = {
 	enquire: {
 		map: function(){
 			enquire.register('screen and (max-width:480px)', function(){
-				Map.defaultZoom = 0;
+				App.Map.defaultZoom = 0;
 			});
 
 			enquire.register('screen and (max-width:767px)', function(){
-				Map.defaultZoom = 1;
+				App.Map.defaultZoom = 1;
 			});
 
 			enquire.register('screen and (max-width:1024px)', function(){
-				Map.defaultZoom = 2;
+				App.Map.defaultZoom = 2;
 			});
 			
 			enquire.register('screen and (max-width:800px) and (-webkit-min-device-pixel-ratio: 1.5)', function(){
-				Map.defaultZoom = 1;
+				App.Map.defaultZoom = 1;
 			});
 			
-			Map.view.setZoom(Map.defaultZoom);
+			App.Map.view.setZoom(App.Map.defaultZoom);
 		}
-	},
-	contactForm: {
-		init: function(){}
 	}
 }
 
-var Menu = {
+App.Menu = {
 	init: function(){
-		Events.topMenu();
+		App.Events.topMenu();
 	}
 }
 
-var Ajax = {
-	getCountryList: function(){
-		$.ajax({
-			type: "GET",
-			url: "countries.xml",
-			dataType: "xml",
-			success: function(xml){
-				Ui.contactForm.showCountryList(xml);
-			}
-		});
-	},
-	formSubmit: function(){
-		$('form').submit(function(e){
-			e.preventDefault();
-
-			$('.output').html('');
-
-			$(this).ajaxSubmit({
-				target: $('.output'),
-				type: 'POST',
-				url: 'mailer.php'
-			});
-		});
-	}
-}
-
-var Map = {
+App.Map = {
 	isLoaded: false,
 	view: null,
-	center: new google.maps.LatLng(42.0525, 0.14365),
-	locations: [
-		{'title': 'US West', 'position': new google.maps.LatLng(44.050826, -123.092073), 'zIndex': 2}, 
-		{'title': 'US East', 'position': new google.maps.LatLng(42.582317, -70.831395), 'zIndex': 3}, 
-		{'title': 'UK', 'position': new google.maps.LatLng(50.856136, -1.328015), 'zIndex': 1}, 
-		{'title': 'Hong Kong', 'position': new google.maps.LatLng(22.280519, 114.156924), 'zIndex': 4}, 
-		{'title': 'China', 'position': new google.maps.LatLng(31.541060, 120.270474), 'zIndex': 5}
-	],
+	center: null,
+	locations: null,
 	counter: 0,
 	layer: "toner",
 	defaultZoom: 2,
 	init: function(){
+		App.Map.setLocations();
+        App.Map.setCenter();
+
 		var mapOptions = {
 			//draggable: false,
-			zoom: Map.defaultZoom,
-			center: Map.center,
+			zoom: App.Map.defaultZoom,
+			center: App.Map.center,
 			mapTypeControl: false,
 			//mapTypeId: Map.layer,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -105,12 +75,12 @@ var Map = {
 			}
         };
 		
-        Map.view = new google.maps.Map(document.getElementById("map"), mapOptions);
+        App.Map.view = new google.maps.Map(document.getElementById("map"), mapOptions);
 		//Map.view.mapTypes.set(Map.layer, new google.maps.StamenMapType(Map.layer));
 		
-		Events.enquire.map();
+		App.Events.enquire.map();
 		
-		Map.showMarkers();
+		App.Map.showMarkers();
 	},
 	addMarker: function() {
 		var image = new google.maps.MarkerImage('images/marker.png',
@@ -130,11 +100,11 @@ var Map = {
 			type: 'poly'
 		};
 		
-		var markerData = Map.locations[Map.counter];
+		var markerData = App.Map.locations[App.Map.counter];
 		
 		var marker = new google.maps.Marker({
 			position: markerData.position,
-			map: Map.view,
+			map: App.Map.view,
 			draggable: false,
 			icon: image,
 			shadow: shadow,
@@ -144,41 +114,80 @@ var Map = {
 			optimized: false
 		});
 	
-		google.maps.event.addListener(marker, 'click', Map.onMarkerClick);
+		google.maps.event.addListener(marker, 'click', App.Map.onMarkerClick);
 		
-		Map.counter++;
+		App.Map.counter++;
+	},
+	setCenter: function(){
+		App.Map.center = new google.maps.LatLng(42.0525, 0.14365);
+	},
+	setLocations: function(){
+		App.Map.locations = 
+		[
+			{'title': 'US West', 'position': new google.maps.LatLng(44.050826, -123.092073), 'zIndex': 2}, 
+			{'title': 'US East', 'position': new google.maps.LatLng(42.582317, -70.831395), 'zIndex': 3}, 
+			{'title': 'UK', 'position': new google.maps.LatLng(50.856136, -1.328015), 'zIndex': 1}, 
+			{'title': 'Hong Kong', 'position': new google.maps.LatLng(22.280519, 114.156924), 'zIndex': 4}, 
+			{'title': 'China', 'position': new google.maps.LatLng(31.541060, 120.270474), 'zIndex': 5}
+		]
 	},
 	showMarkers: function() {
-		for (var i = 0; i < Map.locations.length; i++) {
+		for (var i = 0; i < App.Map.locations.length; i++) {
 			setTimeout(function() {
-				Map.addMarker();
+				App.Map.addMarker();
 			}, (i+1) * 200);
 		}
 	},
 	showLocation: function(coords, zoomLevel) {
-		Map.view.setCenter(coords);
-		Map.view.setZoom(zoomLevel);
+		App.Map.view.setCenter(coords);
+		App.Map.view.setZoom(zoomLevel);
 	},
 	onMarkerClick: function() {
-		if(Map.view.getZoom() == 7){
-			Map.showLocation(Map.center, Map.defaultZoom);
+		if(App.Map.view.getZoom() == 7){
+			App.Map.showLocation(App.Map.center, App.Map.defaultZoom);
 			//$('ul a').removeClass('active');
 		} else {
-			Map.showLocation(this.position, 7);
+			App.Map.showLocation(this.position, 7);
 			//$('ul li:eq('+ (this.zIndex-1) +') a').addClass('active');
 		}
 	}
 }
 
-var Ui = {
+App.Ui = {
 	contactForm: {
 		init: function(){
-			Events.contactForm.init();
+			App.Events.contactForm.init();
 		},
 		showCountryList: function(xml) {			
 			$(xml).find('country').each(function(){
 				$('.form-country').append('<option>'+$(this).text()+'</option>');
 			});			
 		}
+	}
+}
+
+App.Ajax = {
+	getCountryList: function(){
+		$.ajax({
+			type: "GET",
+			url: "countries.xml",
+			dataType: "xml",
+			success: function(xml){
+				App.Ui.contactForm.showCountryList(xml);
+			}
+		});
+	},
+	formSubmit: function(){
+		$('form').submit(function(e){
+			e.preventDefault();
+
+			$('.output').html('');
+
+			$(this).ajaxSubmit({
+				target: $('.output'),
+				type: 'POST',
+				url: 'mailer.php'
+			});
+		});
 	}
 }
