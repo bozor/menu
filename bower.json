@@ -1,0 +1,26 @@
+{
+  "name": "menu",
+  "version": "1.0.0",
+  "homepage": "https://github.com/bozor/menu",
+  "authors": [
+    "Boris Grudinin <boris.grudinin@gmail.com>"
+  ],
+  "description": "a menu",
+  "keywords": [
+    "menu"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "enquire": "~2.1.2",
+    "jquery": "~2.1.4",
+    "respimage": "~1.4.1",
+    "jquery-form": "~3.46.0"
+  }
+}

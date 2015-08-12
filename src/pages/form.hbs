@@ -1,0 +1,26 @@
+---
+title: a form page
+bodyClass: approval
+---
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<div class="form">
+	<form class="form">
+		<input type="text" name="form-text" /><br/>
+		<select name="form-country" class="form-country" required placeholder="country select"></select><br/>
+		<div class="g-recaptcha" data-sitekey="6LdRIQsTAAAAAG-0FkdONcCEPLrZTaU-ypalYnJt"></div>
+		<button type="submit">submit</button>
+	</form>
+
+	<div class="output"></div>
+</div>
+
+{{>scripts}}
+
+<script type="text/javascript">
+	$(function(){
+		Ajax.formSubmit();
+		Ajax.getCountryList();
+	});
+</script>

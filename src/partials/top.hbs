@@ -62,18 +62,16 @@
             </li>
         </ol>-->
         <ol class="nav-top">
-        {{#each pages.page}}
+        {{#each topnav.page}}
             <li>
-                <a href="#" class="has-sub-nav">{{ title }}<i></i></a>
-                {{#subnav}}
+                <a href="#" class="has-sub-nav">{{ linkTitle }}<i></i></a>
                 <div class="sub-nav">
                     <ul>
                         {{#each subnav}}
-                        <li><a href="{{ url }}">{{ title }}</a></li>
+                        <li><a href="{{ url }}">{{ subNavLinkTitle }}</a></li>
                         {{/each}}
                     </ul>
                 </div>
-                {{/subnav}}
             </li>
         {{/each}}
         </ol>

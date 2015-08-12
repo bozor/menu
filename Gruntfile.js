@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         
-        connect: {
+        php: {
             server: {
                 options: {
                     port: 5000,
@@ -65,23 +65,15 @@ module.exports = function(grunt) {
 					dest: './public_html'
 				}]
 			}
-			/*temp_page: {
-				options: { 
-					data: 'src/json/temp.json'
-				},
-				files: [{
-					src: 'src/pages/temp.hbs',
-					dest: './public_html'
-				}]
-			}*/
         },
 
         watch: {
             options: {
                 livereload: 35729
             },
-            markup: {
-                files: 'public_html/**'
+            php: {
+                files: 'src/php/**',
+                tasks: 'copy:php'
             },
             grunt: {
                 files: 'Gruntfile.js'
@@ -99,7 +91,7 @@ module.exports = function(grunt) {
                 tasks: 'sass:dev'
             },
             assemble : {
-                files : ['src/layout/*.hbs','src/pages/*.hbs','src/partials/*.hbs','src/json/temp.json'],
+                files : ['src/layout/*.hbs','src/pages/*.hbs','src/partials/*.hbs','src/json/*.json'],
                 tasks: ['assemble']
             }
         },
@@ -117,9 +109,15 @@ module.exports = function(grunt) {
                 }
             }
         },
-            
+        
+        copy: {
+        	php: { cwd: 'src/php/', dest: 'public_html/', expand: true, src: '**' },
+        	xml: { cwd: 'src/xml/', dest: 'public_html/', expand: true, src: '**' }
+        },
+
         clean: {
         	html: 'public_html/*.html',
+        	php: 'public_html/*.php',
             stylesheets: 'public_html/css/*.css',
             js: 'public_html/js/*.js'
         }
@@ -128,8 +126,8 @@ module.exports = function(grunt) {
     
     grunt.registerTask('stylesheets:dev', ['sass:dev']);
     grunt.registerTask('js:dev', ['concat:dev', 'bower_concat', 'uglify:js']);
-    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble']);
+    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble', 'copy']);
 
     grunt.registerTask('publish', ['dev']);
-    grunt.registerTask('default', ['dev', 'connect', 'watch']);
+    grunt.registerTask('default', ['dev', 'php', 'watch']);
 };
