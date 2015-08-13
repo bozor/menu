@@ -66,6 +66,13 @@ module.exports = function(grunt) {
 				}]
 			}
         },
+        
+        hashres: {
+            all: {
+                src: ['public_html/js/*.js','public_html/css/*.css'],
+                dest: 'public_html/*.html'
+            }
+        },
 
         watch: {
             options: {
@@ -126,7 +133,7 @@ module.exports = function(grunt) {
     
     grunt.registerTask('stylesheets:dev', ['sass:dev']);
     grunt.registerTask('js:dev', ['concat:dev', 'bower_concat', 'uglify:js']);
-    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble', 'copy']);
+    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble', 'copy', 'hashres']);
 
     grunt.registerTask('publish', ['dev']);
     grunt.registerTask('default', ['dev', 'php', 'watch']);
