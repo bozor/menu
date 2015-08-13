@@ -32,20 +32,70 @@
     function sendEmail(){
         $mail_from = "website@test.com";
         $mail_to = "boris.grudinin@gmail.com";
-        $mail_subject = "Cotnact from website";
+        $mail_subject = "Contact from website";
         $form_name = $_POST['form-name'];
-        $body = "Hello,\nA user has contacted you through the website.\n\nThis is an automated email, please do not reply to it.\n\n";
+        $body = "Hello,\nA user has contacted you through the website. Their details are below:\n\n";
         $headers = "From: $mail_from" . "\n" . "Reply-To: $mail_from" . "\n" . "X-Mailer: PHP/" . phpversion();
 
-        $body .= "Country: " . $_POST["form-country"];
+        $body .= "Name: " . $_POST['form-name'] . "\n";
+        $body .= "Email: " . $_POST["form-email"] . "\n";
 
-        echo $body; 
+        if( isset($_POST["form-phone"]) && $_POST["form-phone"] != "" ) {
+            $body .= "Phone: " . $_POST["form-phone"] . "\n";
+        }
 
-        /*if ( mail($mail_to, $mail_subject, $message, $headers) ) {
+        switch($_POST["form-option"]){
+            case 'a':
+                $mail_subject = "Contact from website - a";
+                if( isset($_POST["form-company"]) && $_POST["form-company"] != "" ) {
+                    $body .= "Company: " . $_POST["form-company"] . "\n";
+                }
+
+                if( isset($_POST["form-country"]) && $_POST["form-country"] != "" ) {
+                    $body .= "Country: " . $_POST["form-country"] . "\n";
+                }
+
+                if( isset($_POST["form-message"]) && $_POST["form-message"] != "" ) {
+                    $body .= "Message: " . $_POST["form-message"] . "\n";
+                }
+                break;
+            case 'b':
+                $mail_subject = "Contact from website - b";
+                if( isset($_POST["form-message"]) && $_POST["form-message"] != "" ) {
+                    $body .= "Message: " . $_POST["form-message"] . "\n";
+                }
+                break;
+            case 'c':
+                $mail_subject = "Contact from website - c";
+                if( isset($_POST["form-serial"]) && $_POST["form-serial"] != "" ) {
+                    $body .= "Serial no: " . $_POST["form-serial"] . "\n";
+                }
+
+                if( isset($_POST["form-product"]) && $_POST["form-product"] != "" ) {
+                    $body .= "Product: " . $_POST["form-serial"] . "\n";
+                }
+
+                if( isset($_POST["form-message"]) && $_POST["form-message"] != "" ) {
+                    $body .= "Message: " . $_POST["form-message"] . "\n";
+                }
+
+                //$mail_to = "boris.grudinin@gmail.com , support@temp";
+                break;
+            default:
+                $mail_subject = "Contact from website - general";
+                if( isset($_POST["form-message"]) && $_POST["form-message"] != "" ) {
+                    $body .= "Message: " . $_POST["form-message"] . "\n";
+                }
+                break;
+        }
+
+        $body .= "\nThis is an automated email, please do not reply to it.";
+
+        if ( mail($mail_to, $mail_subject, $body, $headers) ) {
             echo "<div class=\"success\"><h2>Thank you</h2><p>One of our representatives will be in touch shortly.</p></div>";
         } else {
             echo "<div class=\"error\"><h2>Error</h2><p>We are sorry but something went wrong. Please try again later.</p></div>";
-        }*/
+        }
     }
 
     $message = '';

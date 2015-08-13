@@ -90,9 +90,9 @@ module.exports = function(grunt) {
                 files: 'src/scss/**',
                 tasks: 'sass:dev'
             },
-            assemble : {
-                files : ['src/layout/*.hbs','src/pages/*.hbs','src/partials/*.hbs','src/json/*.json'],
-                tasks: ['assemble']
+            assemble: {
+                files: ['src/layout/*.hbs','src/pages/*.hbs','src/partials/*.hbs','src/json/*.json'],
+                tasks: 'assemble'
             }
         },
                      

@@ -7,8 +7,24 @@ bodyClass: approval
 
 <div class="form">
 	<form class="form">
-		<input type="text" name="form-text" /><br/>
-		<select name="form-country" class="form-country" required placeholder="country select"></select><br/>
+		<input type="text" name="form-name" /><br/>
+		<input type="text" name="form-email" /><br/>
+		<input type="text" name="form-phone" /><br/>
+		<select name="form-option">
+			<option value="z">select</option>
+			<option value="a">option 1</option>
+			<option value="b">option 2</option>
+			<option value="c">option 3</option>
+		</select><br/>
+		<section class="form-option form-a">
+			<input type="text" name="form-company" /><br/>
+			<select name="form-country" class="form-country" required placeholder="country select"></select>
+		</section>
+		<section class="form-option form-c">
+			<input type="text" name="form-serial" /><br/>
+			<input type="text" name="form-product" /><br/>
+		</section>
+		<textarea rows="2" cols="10" name="form-message"></textarea>
 		<div class="g-recaptcha" data-sitekey="6LdRIQsTAAAAAG-0FkdONcCEPLrZTaU-ypalYnJt"></div>
 		<button type="submit">submit</button>
 	</form>
@@ -22,5 +38,7 @@ bodyClass: approval
 	$(function(){
 		App.Ajax.formSubmit();
 		App.Ajax.getCountryList();
+
+		App.Ui.contactForm.showFormSection();
 	});
 </script>

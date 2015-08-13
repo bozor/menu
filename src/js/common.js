@@ -158,6 +158,16 @@ App.Ui = {
 		init: function(){
 			App.Events.contactForm.init();
 		},
+		showFormSection: function(){
+			$('select[name=form-option').change(function(e){
+				var val = $(this).val();
+
+				$('.form-option').hide();
+				$('.form-' + val).show();
+				console.log(val);
+
+			});
+		},
 		showCountryList: function(xml) {			
 			$(xml).find('country').each(function(){
 				$('.form-country').append('<option>'+$(this).text()+'</option>');

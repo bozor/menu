@@ -1,0 +1,30 @@
+{{#if top}}
+<ol class="nav-top">
+{{#each nav.page}}
+    <li>
+        <a href="#" class="has-sub-nav">{{ linkTitle }}<i></i></a>
+        <div class="sub-nav">
+            <ul>
+                {{#each subnav}}
+                <li><a href="{{ url }}">{{ subNavLinkTitle }}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </li>
+{{/each}}
+</ol>
+{{else}}
+<ol class="nav-footer">
+{{#each nav.page}}
+    <li>
+        <span class="section">{{ linkTitle }}</span>
+        <ul>
+            {{#each subnav}}
+            <li><a href="{{ url }}">{{ subNavLinkTitle }}</a></li>
+            {{/each}}
+        </ul>
+
+    </li>
+{{/each}}
+</ol>
+{{/if}}
