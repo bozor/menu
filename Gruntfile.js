@@ -192,15 +192,14 @@ module.exports = function(grunt) {
         sshexec: {
             clearJsAndCss: {
                 command: [
-                    'rm -rf css ',
-                    'rm -rf js '
-                ].join('&&'),
+                    'rm -rf /home/44154/users/.home/domains/staging.fianium.com/html/css ',
+                    ' rm -rf /home/44154/users/.home/domains/staging.fianium.com/html/js '
+                ].join(';'),
                 options: {
-                    path: '/home/44154/users/.home/domains/staging.fianium.com/html',
                     host: '<%= server.host %>',
                     username: '<%= server.username %>',
                     password: '<%= server.password %>',
-                    showProgress: true,
+                    showProgress: true
                 }
             }
         },
