@@ -16,9 +16,14 @@ module.exports = function(grunt) {
         },
         
         uglify: {
-            js: {
+            dev: {
                 files: { 
-                  'public_html/js/libs.js': ['public_html/js/libs.js']
+                    'public_html/js/libs.js': 'public_html/js/libs.js'
+                }
+            },
+            prod: {
+                files: { 
+                    'public_html/js/all.js': 'public_html/js/all.js'
                 }
             }
         },
@@ -30,12 +35,19 @@ module.exports = function(grunt) {
             dev: {
                 src: ['src/js/common.js'],
                 dest: 'public_html/js/common.js'
+            },
+            prod: {
+                src: ['public_html/js/temp/libs.js', 'src/js/common.js'],
+                dest: 'public_html/js/all.js'
             }
         },
         
         bower_concat: {
-            js: {
-                dest: 'public_html/js/libs.js',
+            dev: {
+                dest: 'public_html/js/libs.js'
+            },
+            prod: {
+                dest: 'public_html/js/temp/libs.js'
             }
         },
         
@@ -104,12 +116,23 @@ module.exports = function(grunt) {
         },
                      
         sass: {
+            options: {
+                loadPath: require('node-bourbon').includePaths,
+                loadPath: require('node-neat').includePaths
+            },
             dev: {
                 options: {
                     style: 'expanded',
-                    sourcemap: 'auto',
-                    loadPath: require('node-bourbon').includePaths,
-                    loadPath: require('node-neat').includePaths
+                    sourcemap: 'auto'
+                },
+                files: {
+                    'public_html/css/all.css' : 'src/scss/all.scss'
+                }
+            },
+            prod: {
+                options: {
+                    style: 'compressed',
+                    sourcemap: 'none'
                 },
                 files: {
                     'public_html/css/all.css' : 'src/scss/all.scss'
@@ -117,24 +140,99 @@ module.exports = function(grunt) {
             }
         },
         
+        targethtml: {
+            dev: {
+                files: [{
+                    expand: true,
+                    cwd: 'public_html/',
+                    src: ['*.html'],
+                    dest: 'public_html/'
+                }]
+            },
+            prod: {
+                files: [{
+                    expand: true,
+                    cwd: 'public_html/',
+                    src: ['*.html'],
+                    dest: 'public_html/'
+                }]
+            }
+        },
+
+        lineremover: {
+            prod: {
+                files: [{
+                    expand: true,
+                    cwd: 'public_html/',
+                    src: '*.html',
+                    dest: 'public_html/'
+                }]
+            }
+        },
+
         copy: {
         	php: { cwd: 'src/php/', dest: 'public_html/', expand: true, src: '**' },
-        	xml: { cwd: 'src/xml/', dest: 'public_html/', expand: true, src: '**' }
+        	xml: { cwd: 'src/xml/', dest: 'public_html/', expand: true, src: '**' },
+            images: { cwd: 'src/images/', dest: 'public_html/images', expand: true, src: '**' },
+            twitter: { cwd: 'src/twitter/', dest: 'public_html/twitter', expand: true, src: '**' },
+            htaccess: { cwd: './', dest: 'public_html/', expand: true, dot: true, src: '.htaccess' }
         },
 
         clean: {
         	html: 'public_html/*.html',
         	php: 'public_html/*.php',
-            stylesheets: 'public_html/css/*.css',
-            js: 'public_html/js/*.js'
+            stylesheets: 'public_html/css/',
+            js: 'public_html/js/',
+            temp: 'public_html/js/temp',
+            all: 'public_html/' // remove the whole lot and start fresh
+        },
+
+        server: grunt.file.readJSON('server.json'),
+
+        sshexec: {
+            clearJsAndCss: {
+                command: [
+                    'rm -rf css ',
+                    'rm -rf js '
+                ].join('&&'),
+                options: {
+                    path: '/home/44154/users/.home/domains/staging.fianium.com/html',
+                    host: '<%= server.host %>',
+                    username: '<%= server.username %>',
+                    password: '<%= server.password %>',
+                    showProgress: true,
+                }
+            }
+        },
+
+        sftp: {
+            prod: {
+                files: {
+                    "./": "public_html/**"
+                },
+                options: {
+                    path: '/home/44154/users/.home/domains/staging.fianium.com/html',
+                    host: '<%= server.host %>',
+                    username: '<%= server.username %>',
+                    password: '<%= server.password %>',
+                    showProgress: true,
+                    srcBasePath: 'public_html/',
+                    createDirectories: true
+                }
+            }
         }
 
     });
     
     grunt.registerTask('stylesheets:dev', ['sass:dev']);
-    grunt.registerTask('js:dev', ['concat:dev', 'bower_concat', 'uglify:js']);
-    grunt.registerTask('dev', ['clean', 'stylesheets:dev', 'js:dev', 'newer:imagemin:all', 'assemble', 'copy', 'hashres']);
+    grunt.registerTask('stylesheets:prod', ['sass:prod']);
+    grunt.registerTask('js:dev', ['bower_concat:dev', 'concat:dev', 'uglify:dev']);
+    grunt.registerTask('js:prod', ['bower_concat:prod', 'concat:prod', 'uglify:prod', 'clean:temp']);
 
-    grunt.registerTask('publish', ['dev']);
+    grunt.registerTask('dev', ['clean:all', 'stylesheets:dev', 'js:dev', 'assemble', 'targethtml:dev', 'newer:copy']);
+    grunt.registerTask('prod', ['clean:all', 'stylesheets:prod', 'js:prod', 'assemble', 'targethtml:prod', 'newer:imagemin:all', 'copy:xml', 'copy:php', 'copy:twitter', 'copy:htaccess', 'hashres', 'lineremover:prod']);
+
+    grunt.registerTask('build', ['prod']);
+    grunt.registerTask('publish', ['prod', 'sshexec:clearJsAndCss', 'sftp:prod']);
     grunt.registerTask('default', ['dev', 'php', 'watch']);
 };

@@ -26,3 +26,6 @@ public_html/*
 # or any compiled css/map files
 *.css
 *.map
+
+# or the server info json file
+server.json

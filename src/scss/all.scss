@@ -93,7 +93,7 @@ img { max-width: 100%; }
 
 	&.active {
 		.bar { 
-			background: #919092; position: relative; 
+			background: #919092; position: relative; text-decoration: underline;
 
 			&:nth-child(1) { top: 7px; @include transform(rotate(45deg)); }
 			&:nth-child(2) { top: -1px; opacity: 0; @include transform(rotate(45deg)); }

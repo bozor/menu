@@ -9,12 +9,11 @@ bodyClass: approval
 	<a href="#" class="test">test</a>
 </div>
 
+{{#content "script" mode="append"}}
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
-{{>scripts}}
-
 <script type="text/javascript">
 	$(function(){
 		google.maps.event.addDomListener(window, 'load', App.Map.init);
 	});
 </script>
+{{/content}}

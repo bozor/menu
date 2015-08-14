@@ -1,2 +1,18 @@
+{{#block "script"}}
+
+<!--(if target dev)><!-->
 <script type="text/javascript" src="js/libs.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<!--<!(endif)-->
+
+<!--(if target prod)><!-->
+<script type="text/javascript" src="js/all.js"></script>
+<!--<!(endif)-->
+
+<script type="text/javascript">
+	$(function(){
+		App.Menu.init();
+	});
+</script>
+
+{{/block}}

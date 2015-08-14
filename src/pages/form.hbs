@@ -32,8 +32,7 @@ bodyClass: approval
 	<div class="output"></div>
 </div>
 
-{{>scripts}}
-
+{{#content "script" mode="append"}}
 <script type="text/javascript">
 	$(function(){
 		App.Ajax.formSubmit();
@@ -42,3 +41,4 @@ bodyClass: approval
 		App.Ui.contactForm.showFormSection();
 	});
 </script>
+{{/content}}
