@@ -1,0 +1,11 @@
+@import "bourbon";
+@import "neat";
+
+@import "values";
+
+.layout-top { padding-top: 30px; }
+
+.layout-content { @include outer-container; padding: 0 20px; }
+
+.layout-header { }
+.layout-footer { clear: both; background: url(../images/special-bg-light-grey.jpg) center top no-repeat; padding: 45px 0; }

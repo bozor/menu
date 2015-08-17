@@ -1,0 +1,114 @@
+@import "values";
+
+.logo { 
+    display: block; float: left; width: 161px; height: 46px; background: url(../images/logo.svg); background-size: 161px 46px; text-indent: -9999px; border: none;
+    
+    &:hover { border: none; opacity: 0.5; }
+    
+    @include media($sm) { width: 120px; height: 34px; background-size: 120px 34px; }
+}
+
+.header-overlay {
+	@include media($sm) { display: block; overflow: hidden; }
+}
+
+.nav-top,
+.sub-nav > ul { list-style: none; padding: 0; }
+
+.nav-top {
+    float: right; margin-top: 12px;
+    
+    @include media($sm) { display: none; position: absolute; top: 70px; float: none; margin-top: 0; padding: 0 15px 15px; width: 100%; }
+    
+    & > li { 
+        position: relative; float: left; margin-left: 25px; 
+        
+        @include media($sm) { float: none; margin-left: 0; }
+        
+		&.active {
+			.has-sub-nav { color: $default-text-medium; }
+			.sub-nav { 
+				display: block;
+				
+				@include media($sm) { display: block; max-height: 999px; @include transition(200ms all); }
+			}
+		}
+    }
+    
+    .has-sub-nav { 
+        color: $default-text-dark; font-size: $font-size-3; text-transform: lowercase; border-bottom: none;
+        
+        &:hover { color: $default-text-medium; border-bottom: none; }
+    }
+    
+    &.active { display: block; }
+}
+
+.sub-nav { 
+	display: none; position: absolute; right: 0; top: 30px; background: #eee; width: 200px; padding: 5px 18px 15px; border: 1px solid #ddd;
+
+	@include media($sm) {
+		position: relative; top: auto; max-height: 0; @include transition(200ms all);
+	}
+
+	ul { 
+        list-style: none; margin: 0; padding: 0; 
+        
+        > li { padding-top: 8px; text-align: right; }
+    }
+}
+
+.mobile-menu {
+	display: none; float: right; margin: 8px 0 0 0; width: 30px; height: 28px; cursor: pointer; @include transition(200ms all); 
+
+	@include media($sm) { display: block; }
+
+	&.active {
+		.bar { 
+			background: #919092; position: relative; 
+
+			&:nth-child(1) { top: 7px; @include transform(rotate(45deg)); }
+			&:nth-child(2) { top: -1px; opacity: 0; @include transform(rotate(45deg)); }
+			&:nth-child(3) { bottom: 7px; @include transform(rotate(-45deg)); }
+		}
+	}
+
+	.bar { display: block; width: 20px; height: 3px; background: #414042; margin: 0 auto 4px; @include transition(100ms all); border-radius: 2px; }
+}
+
+/*.nav-top { 
+	list-style: none; margin: 0; padding: 10px 15px 0 0; overflow: visible; float: right; 
+	
+	@include media($sm) { display: none; position: absolute; top: 70px; float: none; padding: 0 15px 15px; width: 100%; }
+
+	> li { 
+		position: relative; float: left; margin-left: 15px; 
+
+		@include media($sm) { float: none; margin-left: 0; background: rgba(100,0,0,0.3); }
+
+		&.active {
+			.has-sub-nav { @extend a:hover; }
+			.sub-nav { 
+				display: block;
+				
+				@include media($sm) { display: block; max-height: 999px; @include transition(200ms all); }
+			}
+		}
+
+		.has-sub-nav {
+			@include media($sm) { display: block; }
+		}
+	}
+
+	&.active { display: block; }
+}
+
+.sub-nav {  
+	display: none; position: absolute; right: 0; top: 30px; background: #f2f2f2; min-width: 100px; padding: 15px;
+
+	@include media($sm) {
+		position: relative; top: auto; max-height: 0; @include transition(200ms all);
+	}
+
+	ul { list-style: none; margin: 0; padding: 0; }
+}*/

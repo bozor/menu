@@ -1,0 +1,98 @@
+@import "bourbon";
+@import "neat";
+
+@import "values";
+
+.header { 
+    overflow: hidden;
+    
+    > h2 { float: left; }
+    > .btn-text { float: right; }
+}
+
+.splash-bottom { background: url(../images/special-bg-red.jpg) center top; margin-bottom: 20px; padding: 25px 0; }
+
+.splash-inner { 
+    @include outer-container; 
+    
+    a { 
+        position: relative; display: block; color: #fff; padding: 0 15px;
+        
+        .splash-title { display: block; font-family: 'dincond-boldbold'; font-size: $font-size-7; letter-spacing: -0.05em; margin-bottom: -5px; }
+        .splash-subtitle { opacity: 0.5; font-family: 'dincond-regularregular'; font-size: $font-size-6; letter-spacing: -0.05em; }
+        .splash-cta { 
+            position: absolute; right: 20px; bottom: 2px; border-bottom: 1px solid rgba(#fff, 0.25); font-weight: bold; letter-spacing: -0.05em;
+            
+            &:hover { border-bottom: 1px solid rgba(#fff, 0.8); }
+        }
+    }
+}
+
+.home-intro {
+    @include outer-container; border-bottom: 1px solid $light-border; margin-bottom: 20px; padding: 0 20px;
+    
+    > p { @include span-columns(12); }
+}
+
+.home-text-sections { 
+    @include outer-container; border-bottom: 1px solid $light-border; margin-bottom: 20px; padding: 0 20px;
+    
+    & > .home-text-section {
+        @include outer-container; padding-bottom: 20px;
+        
+        h3 { @include span-columns(5); text-transform: uppercase; margin-bottom: 0; }
+        p { @include span-columns(19); margin-bottom: 0; padding-top: 6px; }
+    }
+}
+
+.home-products { 
+    @include outer-container; margin-bottom: 20px; padding: 0 20px;
+    
+    & > .home-product { 
+        @include span-columns(8); 
+        
+        img { margin-bottom: 10px; }
+    }
+}
+
+.layout-twitter { background: url(../images/special-bg-blue.jpg) center top; padding: 25px 0; }
+
+.latest-tweets {
+    @include outer-container; position: relative; padding: 0 20px;
+    
+    h2 { color: #fff; margin-bottom: 17px; }
+    & > p { position: absolute; right: 20px; bottom: 0; overflow: hidden; margin-bottom: 0; }
+    
+    .twitter-follow { 
+        font-weight: bold; color: #fff; border-bottom: 1px solid rgba(#fff, 0.25); letter-spacing: -0.05em;
+        
+        &:hover { border-bottom: 1px solid rgba(#fff, 0.8); }
+    }
+}
+
+.twitter {
+    .tweet_list { 
+        list-style: none; margin: 0; padding: 0;
+        
+        li { position: relative; color: #fff; font-size: $font-size-3; }
+        
+        .tweet_text { display: block; margin-bottom: 10px; }
+        .tweet_time { opacity: 0.6; }
+        
+        a { 
+            color: #fff; border-bottom: 1px solid rgba(#fff, 0.25);
+            
+            &:hover { border-bottom: 1px solid rgba(#fff, 0.8); }
+        }
+    }
+}
+
+.home-applications { 
+    @include outer-container; padding: 20px 20px 0;
+    
+    & > .home-application { 
+        @include span-columns(6); 
+        
+        img { margin-bottom: 10px; }
+    }
+}

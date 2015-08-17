@@ -1,0 +1,27 @@
+@import "values";
+
+.footer-logo { display: block; float: left; width: 33px; height: 41px; background-size: 33px 41px; background: url(../images/logo-small-grey.svg) no-repeat; text-indent: -9999px; margin-right: 40px; }
+
+.nav-footer { 
+    list-style: none; padding: 0; margin: 0;
+    
+    & > li { @include span-columns(3); }
+    
+    .section-title { text-transform: lowercase; color: $default-text-medium; font-size: $font-size-3; }
+    
+    ul { 
+        list-style: none; padding: 0; margin: 15px 0 25px; 
+        
+        li { margin-bottom: 2px; }
+        
+        a { font-size: 0.85em; }
+    }
+}
+
+.back-to-top { float: right; cursor: pointer; font-size: $font-size-1; }
+
+.footer-copyright { 
+    clear: both; color: $default-text-medium; font-size: $font-size-1;
+    
+    strong { display: inline-block; padding-left: 15px; }
+}

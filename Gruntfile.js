@@ -219,6 +219,34 @@ module.exports = function(grunt) {
                     createDirectories: true
                 }
             }
+        },
+        
+        // prompt for a commit message
+        prompt: {
+            commit: {
+               options: {
+                  questions: [{
+                             config: 'gitmessage',
+                             type: 'input',
+                             message: 'Commit message'
+                             }]
+               }
+            }
+        },
+        // commit changes to github
+        gitcommit: {
+           live: {
+               options: {
+                  verbose: true,
+                  message: '<%=grunt.config("gitmessage")%>',
+                  noVerify: true,
+                  noStatus: false,
+                  ignoreEmpty:true
+               },
+               files: {
+                  src: ['src/']
+               }
+           }
         }
 
     });
@@ -230,8 +258,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', ['clean:all', 'stylesheets:dev', 'js:dev', 'assemble', 'targethtml:dev', 'newer:copy']);
     grunt.registerTask('prod', ['clean:all', 'stylesheets:prod', 'js:prod', 'assemble', 'targethtml:prod', 'newer:imagemin:all', 'copy:xml', 'copy:php', 'copy:twitter', 'copy:htaccess', 'hashres', 'lineremover:prod']);
-
+    
+    
     grunt.registerTask('build', ['prod']);
+    grunt.registerTask('gitTest', ['prod']);
     grunt.registerTask('publish', ['prod', 'sshexec:clearJsAndCss', 'sftp:prod']);
     grunt.registerTask('default', ['dev', 'php', 'watch']);
 };
