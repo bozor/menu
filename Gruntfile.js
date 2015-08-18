@@ -238,7 +238,8 @@ module.exports = function(grunt) {
                 command: [
                     'git add -A',
                     'git commit -m "<%= gitmessage %>"',
-                    'git push -u origin live'
+                    'git push -u origin live',
+                    'git status'
                 ].join('&&')
             }
         }
