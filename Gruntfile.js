@@ -270,7 +270,7 @@ module.exports = function(grunt) {
     
     
     grunt.registerTask('build', ['prod']);
-    grunt.registerTask('commit', ['prompt', 'shell']);
     grunt.registerTask('publish', ['prod', 'sshexec:clearJsAndCss', 'sftp:prod']);
+    grunt.registerTask('commit', ['prompt', 'shell']);
     grunt.registerTask('default', ['dev', 'php', 'watch']);
 };
