@@ -242,9 +242,9 @@ module.exports = function(grunt) {
                     'git status'
                 ].join('&&')
             }
-        }
+        },
         
-        /*buildcontrol: {
+        buildcontrol: {
             options: {
                 dir: 'src/',
                 commit: true,
@@ -253,11 +253,11 @@ module.exports = function(grunt) {
             },
             fianiumServer: {
                 options: {
-                    remote: 'ssh://bozor@github.com/bozor/fi-website.git',
+                    remote: 'ssh://bozor@github.com/bozor/menu.git',
                     branch: 'live'
                 }
             }
-        }*/
+        }
 
     });
     
