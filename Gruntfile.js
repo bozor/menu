@@ -220,34 +220,43 @@ module.exports = function(grunt) {
                 }
             }
         },
-        
-        // prompt for a commit message
+
         prompt: {
-            commit: {
-               options: {
-                  questions: [{
-                             config: 'gitmessage',
-                             type: 'input',
-                             message: 'Commit message'
-                             }]
-               }
+            gitcommit: {
+                options: {
+                    questions: [{
+                        config: 'gitmessage',
+                        type: 'input',
+                        message: 'Commit message (summarise what was changed)'
+                    }]
+                }
             }
         },
-        // commit changes to github
-        gitcommit: {
-           live: {
-               options: {
-                  verbose: true,
-                  message: '<%=grunt.config("gitmessage")%>',
-                  noVerify: true,
-                  noStatus: false,
-                  ignoreEmpty:true
-               },
-               files: {
-                  src: ['src/']
-               }
-           }
+
+        shell: {
+            commit: {
+                command: [
+                    'git add -A',
+                    'git commit -m "<%= gitmessage %>"',
+                    'git push -u origin live'
+                ].join('&&')
+            }
         }
+        
+        /*buildcontrol: {
+            options: {
+                dir: 'src/',
+                commit: true,
+                push: true,
+                message: '<%=grunt.config("gitmessage")%>'
+            },
+            fianiumServer: {
+                options: {
+                    remote: 'ssh://bozor@github.com/bozor/fi-website.git',
+                    branch: 'live'
+                }
+            }
+        }*/
 
     });
     
@@ -261,7 +270,7 @@ module.exports = function(grunt) {
     
     
     grunt.registerTask('build', ['prod']);
-    grunt.registerTask('gitTest', ['prod']);
+    grunt.registerTask('commit', ['prompt', 'shell']);
     grunt.registerTask('publish', ['prod', 'sshexec:clearJsAndCss', 'sftp:prod']);
     grunt.registerTask('default', ['dev', 'php', 'watch']);
 };
